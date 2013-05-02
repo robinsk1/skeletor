@@ -1,0 +1,4 @@
+development:
+  songkick_api_key: "Wa5KXVW2sx3ysyPy"
+production:
+  songkick_api_key: "Wa5KXVW2sx3ysyPy"
