@@ -1,4 +1,10 @@
 Skeletor::Application.routes.draw do
+  resources :artists
+
+
+  resources :festivals
+
+
   authenticated :user do
     root :to => 'home#index'
   end

@@ -28,4 +28,4 @@ gem "hub", ">= 1.10.2", :require => nil, :group => [:development]
 
 gem 'songkickr'
 gem 'httparty'
-gem 'ruby-debug-ide'
+#gem 'ruby-debug-ide'
