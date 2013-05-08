@@ -1,3 +1,8 @@
+PATH
+  remote: ~/workspace/songkickr
+  specs:
+    songkickr (0.3.3)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -67,6 +72,9 @@ GEM
       railties (~> 3.1)
       warden (~> 1.2.1)
     diff-lcs (1.2.4)
+    echonest-ruby-api (0.2)
+      httparty
+      multi_json
     email_spec (1.4.0)
       launchy (~> 2.1)
       mail (~> 2.2)
@@ -168,7 +176,6 @@ GEM
     simple_form (2.1.0)
       actionpack (~> 3.0)
       activemodel (~> 3.0)
-    songkickr (0.3.3)
     sprockets (2.2.2)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -206,6 +213,7 @@ DEPENDENCIES
   compass-rails (>= 1.0.3)
   database_cleaner (>= 1.0.0.RC1)
   devise (>= 2.2.3)
+  echonest-ruby-api
   email_spec (>= 1.4.0)
   factory_girl_rails (>= 4.2.0)
   haml-rails (>= 0.4)
@@ -220,7 +228,7 @@ DEPENDENCIES
   rspec-rails (>= 2.12.2)
   sass-rails (~> 3.2.3)
   simple_form (>= 2.1.0)
-  songkickr
+  songkickr!
   uglifier (>= 1.0.3)
   unicorn (>= 4.3.1)
   zurb-foundation (>= 4.0.9)
