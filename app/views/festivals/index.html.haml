@@ -1,21 +1,19 @@
 .row
   .large-12.columns
 
-    %h1 festivals
+    %h1
 
-.row
-  .large-4.columns
-    .panel
-      %p
-        %img{:src => "http://placehold.it/400x300"}/
-  .large-4.columns
-    .panel
-      %p
-        %img{:src => "http://placehold.it/400x300"}/
-  .large-4.columns
-    .panel
-      %p
-        %img{:src => "http://placehold.it/400x300"}/
+-@festivals.in_groups_of(3, false).each do |group|
+  .row
+    - group.each do |festival|
+      .large-4.columns
+        .panel
+          %p
+            = festival.name
+
+
+
+
 
 
 

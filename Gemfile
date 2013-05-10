@@ -32,4 +32,6 @@ gem 'songkickr', :path => "~/workspace/songkickr"
 gem 'httparty'
 
 gem 'echonest-ruby-api'
+
+gem 'wombat'
 #gem 'ruby-debug-ide'
