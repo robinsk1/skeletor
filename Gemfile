@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-gem 'rails', '3.2.13'
+gem 'rails'
 #gem 'multi_json', '1.6.0'
 
 group :assets do
@@ -27,11 +27,10 @@ gem "quiet_assets", ">= 1.0.2", :group => :development
 gem "better_errors", ">= 0.7.2", :group => :development
 gem "binding_of_caller", ">= 0.7.1", :group => :development, :platforms => [:mri_19, :rbx]
 gem "hub", ">= 1.10.2", :require => nil, :group => [:development]
+gem "nokogiri"
 
-gem 'songkickr', :path => "~/workspace/songkickr"
+#gem 'songkickr', :path => "~/workspace/songkickr"
 gem 'httparty'
-
 gem 'echonest-ruby-api'
-
-gem 'wombat'
+gem 'dragonfly'
 #gem 'ruby-debug-ide'
