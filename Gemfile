@@ -33,4 +33,5 @@ gem "nokogiri"
 gem 'httparty'
 gem 'echonest-ruby-api'
 gem 'dragonfly'
+gem "figaro"
 #gem 'ruby-debug-ide'

@@ -11,14 +11,24 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130512183054) do
+ActiveRecord::Schema.define(:version => 20130515075838) do
 
   create_table "artists", :force => true do |t|
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
     t.string   "musicbrainz_id"
-    t.string   "image_url"
     t.string   "name"
+  end
+
+  create_table "editions", :force => true do |t|
+    t.integer  "festival_id"
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.string   "web"
+    t.string   "line_up_url"
+    t.string   "css_element"
   end
 
   create_table "festivals", :force => true do |t|
@@ -26,8 +36,6 @@ ActiveRecord::Schema.define(:version => 20130512183054) do
     t.datetime "updated_at",  :null => false
     t.string   "name"
     t.text     "description"
-    t.string   "image_url"
-    t.string   "location"
   end
 
   create_table "festivals_artists", :id => false, :force => true do |t|
@@ -37,6 +45,24 @@ ActiveRecord::Schema.define(:version => 20130512183054) do
 
   add_index "festivals_artists", ["artist_id", "festival_id"], :name => "index_festivals_artists_on_artist_id_and_festival_id"
   add_index "festivals_artists", ["festival_id", "artist_id"], :name => "index_festivals_artists_on_festival_id_and_artist_id"
+
+  create_table "locations", :force => true do |t|
+    t.string   "address"
+    t.string   "country_code"
+    t.integer  "locationable_id"
+    t.string   "locationable_type"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end
+
+  create_table "pictures", :force => true do |t|
+    t.string   "name"
+    t.string   "image_url"
+    t.integer  "imageable_id"
+    t.string   "imageable_type"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
 
   create_table "roles", :force => true do |t|
     t.string   "name"
@@ -74,16 +100,5 @@ ActiveRecord::Schema.define(:version => 20130512183054) do
   end
 
   add_index "users_roles", ["user_id", "role_id"], :name => "index_users_roles_on_user_id_and_role_id"
-
-  create_table "years", :force => true do |t|
-    t.integer  "festival_id"
-    t.datetime "start_date"
-    t.datetime "end_date"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-    t.string   "web"
-    t.string   "line_up_url"
-    t.string   "css_element"
-  end
 
 end
