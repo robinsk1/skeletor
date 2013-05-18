@@ -87,6 +87,22 @@ namespace :db do
   end
 
 
+  task :artists => :environment do
+    [Artist].each(&:destroy_all)
+    artists = Scrapers::Event.edition_artists(2013)
+    artists.each do |a|
+      a[:artists].each do |x|
+        if (k = Artist.where(["lower(name) = ?", x.downcase ]).first)
+           k.appearances.create!(:edition_id => a[:edition_id], :artist_id => k.id)
+        else
+           k = Artist.create!(:name=> x )
+           k.appearances.create!(:edition_id => a[:edition_id], :artist_id => k.id)
+        end
+      end
+    end
+  end
+
+
 
 
 

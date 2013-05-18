@@ -34,4 +34,6 @@ gem 'httparty'
 gem 'echonest-ruby-api'
 gem 'dragonfly'
 gem "figaro"
+
+gem 'wikipedia-client'
 #gem 'ruby-debug-ide'
