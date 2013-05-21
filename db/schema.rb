@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130517181504) do
+ActiveRecord::Schema.define(:version => 20130521220312) do
 
   create_table "appearances", :force => true do |t|
     t.datetime "created_at", :null => false
@@ -66,11 +66,12 @@ ActiveRecord::Schema.define(:version => 20130517181504) do
 
   create_table "pictures", :force => true do |t|
     t.string   "name"
-    t.string   "image_url"
     t.integer  "imageable_id"
     t.string   "imageable_type"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+    t.string   "cover_image_uid"
+    t.string   "cover_image_name"
   end
 
   create_table "roles", :force => true do |t|

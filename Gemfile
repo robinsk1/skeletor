@@ -28,12 +28,14 @@ gem "better_errors", ">= 0.7.2", :group => :development
 gem "binding_of_caller", ">= 0.7.1", :group => :development, :platforms => [:mri_19, :rbx]
 gem "hub", ">= 1.10.2", :require => nil, :group => [:development]
 gem "nokogiri"
-
+gem 'fog'
 #gem 'songkickr', :path => "~/workspace/songkickr"
 gem 'httparty'
 gem 'echonest-ruby-api'
-gem 'dragonfly'
 gem "figaro"
+gem 's3'
+gem 'rack-cache', :require => 'rack/cache'
+gem 'dragonfly', '~>0.9.15'
 
 gem 'wikipedia-client'
 #gem 'ruby-debug-ide'

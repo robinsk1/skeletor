@@ -89,7 +89,7 @@ namespace :db do
 
   task :artists => :environment do
     [Artist].each(&:destroy_all)
-    artists = Scrapers::Event.edition_artists(2013)
+    artists = Scrapers::Event.crawl_edition_artists(2013)
     artists.each do |a|
       a[:artists].each do |x|
         if (k = Artist.where(["lower(name) = ?", x.downcase ]).first)

@@ -1,10 +1,12 @@
 module Scrapers
 
 class Event
+  #require 'uri'
   require 'echonest-ruby-api'
-  require 'uri'
   require 'wikipedia'
   require "open-uri"
+  require 's3'
+
 
   attr_accessor :year, :festival
 
@@ -19,7 +21,7 @@ class Event
   end
 
 
-  def self.edition_artists(year)
+  def self.crawl_edition_artists(year)
     editions = Edition.where("extract(year from start_date) = ?", year).all
     array = Array.new
     editions.each do |edition|
@@ -31,101 +33,40 @@ class Event
     return array
   end
 
-  def self.merge_artists(year)
-    a = []
-    merged = []
-    edition_arts = self.edition_artists(year)
-    edition_arts.each do |ed|
-      a = a.concat(ed[:artists])
+
+  #def self.save_artist_photo(artist_photo_hash)
+  #  self.save_to_s3(artist_photo_hash[:image])
+  #end
+
+  def self.build_relationships_for_artist_photo(artist_photo_hash)
+    begin
+      Artist.find(artist_photo_hash[:artist_id]).pictures.create(:cover_image_url => artist_photo_hash[:image], :name => artist_photo_hash[:name])
+    rescue Exception => e
+      puts "Exception: #{e}"
     end
-    a.sort!
-    return a
   end
 
-  def get_artist_photos(line_up, n)
-    a = Array.new
-    line_up[0..n].each do |artist|
-      name = URI.escape(artist)
-      result = Echonest::Artist.new(ENV['ECHONEST_API_KEY'], name)
-      begin
-        image = result.images.first
-      rescue Echonest::Error => e
-         image = "no image"
-      end
-      a << image
+  def self.get_photo_from_echonest(artist_object)
+    artist_image_hash = {}
+    name = URI.escape(artist_object.name)
+    begin
+      #response = HTTParty.get("http://developer.echonest.com/api/v4/artist/images?name=#{name}&api_key=#{ENV['ECHONEST_API_KEY']}&format=json&results=1&start=0&license=cc-by-sa")
+      #json = MultiJson.load(response.body, symbolize_keys: true)
+      artist = Echonest::Artist.new(ENV['ECHONEST_API_KEY'], name)
+      images = artist.images
+    rescue Echonest::Error => e
+      puts "Exception: #{e.inspect}"
     end
-    puts line_up.length
-    puts a.length
-    a
-  end
-
-
-
-  def self.wiki_search_photo
-      cat_keys = %w(music musical group groups musicians musician singer singers rock pop rap rappers group artists artist)
-      fail = 0
-      success = 0; pages = []; r = /#{cat_keys.join("|")}/
-
-    Artist.limit(3).each do |a|
-      hash = {}
-      puts "Fetching #{a.name}..."
-      begin
-      page =  Wikipedia.find(a.name)
-      rescue Exception => e
-        puts "Error : #{e}"
-        sleep 5
-      else
-        if !page.categories.nil?
-        relevant = page.categories.each do |c|
-          r === c
-          end
-        end
-        t = relevant ? (!page.image_urls.nil? ? page.image_urls : nil ) : nil
-        t == nil ? (fail +=1; puts "# no images fetched for #{a.name} ") : (success +=1)
-        id_images = hash.merge(:artist_id => a.id, :images=> t)
-        pages << id_images
-        if !id_images[:images].nil?
-          puts "#{id_images[:images].length if !id_images[:images].nil?} #{a.name} images fetched"
-        end
-      ensure
-        sleep 1.0 + rand
-      end
+    msg = !images.nil? ? (images.first) : ("No image")
+    puts "Artist: #{name} #{msg}"
+    image = !images.nil? ? images.first : nil
+    if !image.nil?
+      uri = URI.parse(image)
+      file_name = File.basename(uri.path)
+    else
+      file_name =  nil
     end
-      puts "==fail======#{fail}"
-      puts "==success===#{success}"
-    self.save_image(pages)
-  end
-
-
-  def self.save_image(stuff)
-    image_dir = "#{Rails.root}/app/assets/images/artists/"
-
-    stuff.each do |a|
-      puts a.inspect
-      if !a[:images].nil?
-        if a[:images].length > 1
-          a[:images].each do |image_url|
-            open(image_url) {|f|
-                  name = File.basename(image_url)
-                  File.open("#{image_dir}"+name,"wb") do |file|
-                    file.puts f.read
-                  end
-               }
-            Artist.find(a[:artist_id]).pictures.create(:image_url => image_url, :name => name)
-          end
-        else
-          open(a[:images][0]) {|f|
-             name = File.basename(a[:images][0])
-             File.open("#{image_dir}"+name,"wb") do |file|
-               file.puts f.read
-             end
-          }
-          Artist.find(a[:artist_id]).pictures.create(:image_url => a[:images][0], :name => name)
-        end
-      end
-
-    end
-
+    artist_image_hash.merge(:artist_id => artist_object.id, :image=> image, :name => file_name )
   end
 
 
@@ -144,6 +85,108 @@ class Event
         return artists
      end
   end
+
+    #def self.merge_artists(year)
+  #  a = []
+  #  merged = []
+  #  edition_arts = self.edition_artists(year)
+  #  edition_arts.each do |ed|
+  #    a = a.concat(ed[:artists])
+  #  end
+  #  a.sort!
+  #  return a
+  #end
+
+  #def self.crawl_wiki_for_artist_photos
+  #    cat_keys = %w(music musical group groups musicians musician singer singers rock pop rap rappers group artists artist)
+  #    fail = 0
+  #    success = 0; pages = []; r = /#{cat_keys.join("|")}/
+  #
+  #  Artist.limit(3).each do |a|
+  #    hash = {}
+  #    puts "Fetching #{a.name}..."
+  #    begin
+  #    page =  Wikipedia.find(a.name)
+  #    rescue Exception => e
+  #      puts "Error : #{e}"
+  #      sleep 5
+  #    else
+  #      if !page.categories.nil?
+  #      relevant = page.categories.each do |c|
+  #        r === c
+  #        end
+  #      end
+  #      t = relevant ? (!page.image_urls.nil? ? page.image_urls : nil ) : nil
+  #      t == nil ? (fail +=1; puts "# no images fetched for #{a.name} ") : (success +=1)
+  #      id_images = hash.merge(:artist_id => a.id, :images=> t)
+  #      pages << id_images
+  #      if !id_images[:images].nil?
+  #        puts "#{id_images[:images].length if !id_images[:images].nil?} #{a.name} images fetched"
+  #      end
+  #    ensure
+  #      sleep 1.0 + rand
+  #    end
+  #  end
+  #    puts "==fail======#{fail}"
+  #    puts "==success===#{success}"
+  #  self.save_image(pages)
+  #end
+
+
+  #def self.save_image(stuff)
+  #  image_dir = "#{Rails.root}/app/assets/images/artists/"
+  #  stuff.each do |a|
+  #    puts a.inspect
+  #    if !a[:images].nil?
+  #      if a[:images].length > 1
+  #        a[:images].each do |image_url|
+  #          open(image_url) {|f|
+  #                uri = URI.parse(image_url)
+  #                name = File.basename(uri)
+  #                File.open("#{image_dir}"+name,"wb") do |file|
+  #                  file.puts f.read
+  #                end
+  #             }
+  #          Artist.find(a[:artist_id]).pictures.create(:image_url => image_url, :name => name)
+  #        end
+  #      else
+  #        open(a[:images][0]) {|f|
+  #           uri = URI.parse(a[:images][0])
+  #           name = File.basename(uri)
+  #           File.open("#{image_dir}"+name,"wb") do |file|
+  #             file.puts f.read
+  #           end
+  #        }
+  #        Artist.find(a[:artist_id]).pictures.create(:image_url => a[:images][0], :name => name)
+  #      end
+  #    end
+  #  end
+  #end
+
+
+  #def self.save_to_s3(url)
+  #  begin
+  #  amazon = S3::Service.new(access_key_id: ENV['S3_ACCESS_KEY_ID'], secret_access_key: ENV['S3_SECRET_ACCESS_KEY'])
+  #  bucket = amazon.buckets.find('sk3l8t0r-artists')
+  #  download = open(url)
+  #  uri = URI.parse(url)
+  #  name = File.basename(uri.path)
+  #  file = bucket.objects.build(name)
+  #  file.content = (File.read download)
+  #    if file.save
+  #      puts "#{url} saved"
+  #      return true
+  #    else
+  #      puts "#{url} ***save failed***"
+  #      return false
+  #    end
+  #  rescue  Exception => e
+  #    puts "Exception: #{e}"
+  #  end
+  #end
+
+
+
 
 
 end
