@@ -2,7 +2,19 @@ class ArtistsController < ApplicationController
   # GET /artists
   # GET /artists.json
   def index
-    @artists = Artist.all
+    if params[:festival_id].blank?
+      @grouped = {}
+      Artist.all.each do |artist|
+        letter = artist.name.slice(0,1).upcase
+        @grouped[letter] ||= []
+        @grouped[letter] << artist
+      end
+      render 'alphalist'
+      return
+    else
+      @festival = Festival.find(params[:festival_id])
+      @artists = Festival.find(params[:festival_id]).editions.first.artists
+    end
 
     respond_to do |format|
       format.html # index.html.erb

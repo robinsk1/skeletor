@@ -1,0 +1,21 @@
+-#%ul
+-#  - @grouped.keys.sort.each do |letter|
+-#    %li
+-#      %h2= letter
+-#      %ul
+-#        - @grouped[letter].each do |artist|
+-#          %li= link_to artist.name, artist_path(artist)
+.row
+  %ol
+    -Artist.all.sort_by(&:name).group_by(&:initial).each do |initial, artists|
+      %li
+        = content_tag(:h3, initial)
+        - artists.each do |artist|
+          %ul
+            %li
+              = link_to(artist.name, artist)
+
+
+
+
+

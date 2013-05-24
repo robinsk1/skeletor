@@ -9,7 +9,10 @@
       .large-4.columns
         .panel
           %p
-            = festival.name
+            = link_to image_tag(festival.pictures.first.cover_image.process(:greyscale).thumb('320x300#').url), festival_artists_path(festival)
+          %h3
+            %span{:class => "shadow5"}
+              =festival.name
 
 
 

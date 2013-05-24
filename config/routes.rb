@@ -2,7 +2,9 @@ Skeletor::Application.routes.draw do
   resources :artists
 
 
-  resources :festivals
+  resources :festivals do
+    resources :artists
+  end
 
 
   authenticated :user do

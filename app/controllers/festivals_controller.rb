@@ -1,6 +1,7 @@
 class FestivalsController < ApplicationController
   # GET /festivals
   # GET /festivals.json
+
   def index
     @festivals = Festival.all
 

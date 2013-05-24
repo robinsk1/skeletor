@@ -38,4 +38,6 @@ gem 'rack-cache', :require => 'rack/cache'
 gem 'dragonfly', '~>0.9.15'
 
 gem 'wikipedia-client'
+#gem 'scrapix'
+
 #gem 'ruby-debug-ide'

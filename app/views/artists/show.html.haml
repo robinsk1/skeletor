@@ -3,6 +3,14 @@
 
     %p#notice= notice
 
+    %h2
+      =@artist.name
+
+    %p
+
+    =image_tag(@artist.pictures.first.cover_image.url)
+
+    %p
     = link_to 'Edit', edit_artist_path(@artist)
     \|
     = link_to 'Back', artists_path
