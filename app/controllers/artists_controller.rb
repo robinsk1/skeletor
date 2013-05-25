@@ -13,11 +13,12 @@ class ArtistsController < ApplicationController
       return
     else
       @festival = Festival.find(params[:festival_id])
-      @artists = Festival.find(params[:festival_id]).editions.first.artists
+      @artists = Festival.find(params[:festival_id]).editions.first.artists.paginate(:page => params[:page])
     end
 
     respond_to do |format|
       format.html # index.html.erb
+      format.js
       format.json { render json: @artists }
     end
   end

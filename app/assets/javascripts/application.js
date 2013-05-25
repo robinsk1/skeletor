@@ -13,6 +13,8 @@
 //= require jquery
 //= require jquery_ujs
 //= require foundation
+//= require jquery.inview.js
+
 //= require_tree .
 
 $(function(){ $(document).foundation(); });

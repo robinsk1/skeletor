@@ -1,0 +1,5 @@
+$('.artists-wrapper').append('#{escape_javascript(render partial: "artists", :locals => { :artists => @artists })}');
+$('a.load-more-artists').attr('href', '#{festival_artists_path @festival.id, page: @artists.next_page}');
+
+- unless @artists.next_page
+  $('a.load-more-artists').remove();

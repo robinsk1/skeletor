@@ -5,15 +5,9 @@
     %h1
       =@festival.name
 
--@artists.in_groups_of(3, false).each do |group|
-  .row
-    - group.each do |artist|
-      .large-4.columns
-        .panel
-          %p
-            = link_to image_tag(if (!artist.pictures.empty? && !artist.pictures.first.cover_image_uid.nil?)  |
-              then artist.pictures.first.cover_image.process(:greyscale).thumb('320x200#').url else Dragonfly[:images].fetch_file(File.join(Rails.root, 'app/assets/images/default.gif')).process(:greyscale).thumb('320x200#').url end), artist |
-          %h3
-            %span{:class => "shadow5"}
-              =artist.name
+.artists-wrapper
+  = render :partial => 'artists', :locals => { :artists => @artists }
 
+.row
+  .large-12-columns#gallery
+    = link_to 'Load More Artists', festival_artists_path(@festival.id, :page => @artists.next_page), :class=>"load-more-artists", :remote => true if @artists.next_page
