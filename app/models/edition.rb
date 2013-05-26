@@ -4,4 +4,6 @@ class Edition < ActiveRecord::Base
   has_many :appearances
   has_one :location, :as => :locationable
   has_many :artists, :through => :appearances
+
+  resourcify
 end

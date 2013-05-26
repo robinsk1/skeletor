@@ -11,6 +11,4 @@ class User < ActiveRecord::Base
   attr_accessible :name, :email, :password, :password_confirmation, :remember_me
   has_one :location, :as => :locationable
   #has_many :festivals, :through => :profile
-
-
 end

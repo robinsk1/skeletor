@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130521220312) do
+ActiveRecord::Schema.define(:version => 20130526163418) do
 
   create_table "appearances", :force => true do |t|
     t.datetime "created_at", :null => false
@@ -25,9 +25,11 @@ ActiveRecord::Schema.define(:version => 20130521220312) do
     t.datetime "updated_at",     :null => false
     t.string   "musicbrainz_id"
     t.string   "name"
+    t.string   "slug"
   end
 
   add_index "artists", ["name"], :name => "index_artists_on_name", :unique => true
+  add_index "artists", ["slug"], :name => "index_artists_on_slug"
 
   create_table "editions", :force => true do |t|
     t.integer  "festival_id"
@@ -45,7 +47,10 @@ ActiveRecord::Schema.define(:version => 20130521220312) do
     t.datetime "updated_at",  :null => false
     t.string   "name"
     t.text     "description"
+    t.string   "slug"
   end
+
+  add_index "festivals", ["slug"], :name => "index_festivals_on_slug"
 
   create_table "festivals_artists", :id => false, :force => true do |t|
     t.integer "festival_id"
@@ -73,6 +78,19 @@ ActiveRecord::Schema.define(:version => 20130521220312) do
     t.string   "cover_image_uid"
     t.string   "cover_image_name"
   end
+
+  create_table "rails_admin_histories", :force => true do |t|
+    t.text     "message"
+    t.string   "username"
+    t.integer  "item"
+    t.string   "table"
+    t.integer  "month",      :limit => 2
+    t.integer  "year",       :limit => 8
+    t.datetime "created_at",              :null => false
+    t.datetime "updated_at",              :null => false
+  end
+
+  add_index "rails_admin_histories", ["item", "table", "month", "year"], :name => "index_rails_admin_histories"
 
   create_table "roles", :force => true do |t|
     t.string   "name"

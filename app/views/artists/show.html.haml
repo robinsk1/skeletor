@@ -7,10 +7,11 @@
       =@artist.name
 
     %p
+      =image_tag(!@artist.pictures.first.nil? ? @artist.pictures.first.cover_image.url : Dragonfly[:images].fetch_file(File.join(Rails.root, 'app/assets/images/default.gif')).process(:greyscale).thumb('320x200#').url)
 
-    =image_tag(@artist.pictures.first.cover_image.url)
 
     %p
-    = link_to 'Edit', edit_artist_path(@artist)
-    \|
-    = link_to 'Back', artists_path
+    -if can? :update, @artist
+      = link_to 'Edit', edit_artist_path(@artist)
+      \|
+      = link_to 'Back', artists_path

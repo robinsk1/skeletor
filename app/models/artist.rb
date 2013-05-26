@@ -7,6 +7,11 @@ class Artist < ActiveRecord::Base
   has_one :location, :as => :locationable, :dependent => :destroy
   has_many :editions, :through => :appearances
 
+  extend FriendlyId
+  friendly_id :name, use: :slugged
+
+  resourcify
+
   def initial
       # find a number at the start of the string if it exists
       m = self.name.match(/^\d+/)
