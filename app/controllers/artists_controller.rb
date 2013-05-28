@@ -27,6 +27,18 @@ class ArtistsController < ApplicationController
   # GET /artists/1.json
   def show
     @artist = Artist.find(params[:id])
+    artist = Echonest::Artist.new(ENV['ECHONEST_API_KEY'], URI.escape(@artist.name))
+    @bios = {}
+    begin
+      bios = artist.biographies
+      @bios[:text] = bios[0].text
+      @bios = @bios.merge(:url => bios[0].url )
+      @blogs = artist.blogs
+    rescue Exception => e
+      @bios = nil
+      @blogs = nil
+    end
+
 
     respond_to do |format|
       format.html # show.html.erb

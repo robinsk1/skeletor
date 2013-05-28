@@ -3,14 +3,28 @@
 
     %p#notice= notice
 
-    %h2
-      =@artist.name
-
     %p
-      =image_tag(!@artist.pictures.first.nil? ? @artist.pictures.first.cover_image.url : Dragonfly[:images].fetch_file(File.join(Rails.root, 'app/assets/images/default.gif')).process(:greyscale).thumb('320x200#').url)
-
-
-    %p
+      =image_tag(!@artist.pictures.first.nil? ? @artist.pictures.first.cover_image.process(:greyscale).thumb("980x400#").url : Dragonfly[:images].fetch_file(File.join(Rails.root, 'app/assets/images/default.gif')).process(:greyscale).thumb('980x200#').url)
+    %h3
+      %span{:class => "shadow5"}
+        =@artist.name
+      %h2
+        Bio
+    -unless @bios.nil?
+      %p
+        =simple_format @bios[:text]
+      %p
+        =link_to @bios[:url], @bios[:url]
+    -else
+      %p
+        No information available
+    -unless @blogs.nil?
+      %h2
+        Blogs
+      %p
+        -@blogs.each do |blog|
+          =link_to blog.name, blog.url, {:target => "_blank"}
+      %p
     -if can? :update, @artist
       = link_to 'Edit', edit_artist_path(@artist)
       \|

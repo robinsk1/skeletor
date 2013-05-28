@@ -3,7 +3,9 @@
   .large-12.columns
 
     %h1
-      =@festival.name
+      ="#{@festival.name} #{@festival.editions.first.start_date.strftime("%m/%d/%Y")} to #{@festival.editions.first.end_date.strftime("%m/%d/%Y")}"
+    %p
+      =@festival.description
 
 .artists-wrapper
   = render :partial => 'artists', :locals => { :artists => @artists }

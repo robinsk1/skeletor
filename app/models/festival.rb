@@ -12,4 +12,9 @@ class Festival < ActiveRecord::Base
 
   resourcify
 
+
+  def current_edition
+    editions.where("extract(year from start_date) = ?", Time.new.year)
+  end
+
 end

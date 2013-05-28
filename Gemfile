@@ -37,6 +37,7 @@ gem "figaro"
 gem 's3'
 gem 'rack-cache', :require => 'rack/cache'
 gem 'dragonfly', '~>0.9.15'
+#gem 'rmagick', '2.13.1'
 
 gem 'wikipedia-client'
 

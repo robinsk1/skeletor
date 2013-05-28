@@ -4,13 +4,15 @@ Skeletor::Application.routes.draw do
   resources :artists
 
   resources :festivals do
-    resources :artists
+    #resources :editions do
+      resources :artists
+    #end
   end
 
   authenticated :user do
-    root :to => 'home#index'
+    root :to => 'festivals#index'
   end
-  root :to => "home#index"
+  root :to => "festivals#index"
   devise_for :users
   resources :users
 
