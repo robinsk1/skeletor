@@ -28,7 +28,7 @@ end
 app.configure do |c|
   c.allow_fetch_file = true
   c.protect_from_dos_attacks = true
-  c.secret = "df8129cedfa5568bbb18bc8b0d971302599ff0f3c5256d4d04ed38429a95b4e57fc9e7f24dc537fc7a1a5bc0bdce1902a0acb1c9f1fbfa72140b82436dac43a4"  # use rake secret to generate
+  c.secret = ENV['DRAGON_SECRET']  # use rake secret to generate
 end
 
 app.define_macro(ActiveRecord::Base, :image_accessor)
