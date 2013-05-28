@@ -11,6 +11,9 @@ end
 
 gem 'taps', :group => :development
 
+gem 'sqlite3', :group => :development
+gem 'heroku'
+
 gem 'jquery-rails'
 gem "unicorn", ">= 4.3.1"
 gem "pg", ">= 0.15.0"
@@ -49,6 +52,8 @@ gem 'will_paginate', '~> 3.0'
 gem 'rails_admin'
 
 gem 'friendly_id'
+
+gem 'google-analytics-rails'
 
 
 #gem 'scrapix'
