@@ -12,6 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery.isotope
 //= require foundation
 //= require jquery.inview.js
 

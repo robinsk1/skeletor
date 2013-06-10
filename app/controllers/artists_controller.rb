@@ -9,7 +9,7 @@ class ArtistsController < ApplicationController
         @grouped[letter] ||= []
         @grouped[letter] << artist
       end
-      render 'alphalist'
+        render 'alphalist'
       return
     else
       @festival = Festival.find(params[:festival_id])
@@ -21,6 +21,10 @@ class ArtistsController < ApplicationController
       format.js
       format.json { render json: @artists }
     end
+  end
+
+  def isotope
+    @artists = Artist.limit(50)
   end
 
   # GET /artists/1
@@ -38,8 +42,6 @@ class ArtistsController < ApplicationController
       @bios = nil
       @blogs = nil
     end
-
-
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @artist }

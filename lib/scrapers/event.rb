@@ -192,31 +192,6 @@ class Event
   end
 
 
-  #def self.save_to_s3(url)
-  #  begin
-  #  amazon = S3::Service.new(access_key_id: ENV['S3_ACCESS_KEY_ID'], secret_access_key: ENV['S3_SECRET_ACCESS_KEY'])
-  #  bucket = amazon.buckets.find('sk3l8t0r-artists')
-  #  download = open(url)
-  #  uri = URI.parse(url)
-  #  name = File.basename(uri.path)
-  #  file = bucket.objects.build(name)
-  #  file.content = (File.read download)
-  #    if file.save
-  #      puts "#{url} saved"
-  #      return true
-  #    else
-  #      puts "#{url} ***save failed***"
-  #      return false
-  #    end
-  #  rescue  Exception => e
-  #    puts "Exception: #{e}"
-  #  end
-  #end
-
-
-
-
-
 end
 
 end

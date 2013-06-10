@@ -1,7 +1,11 @@
 Skeletor::Application.routes.draw do
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
 
-  resources :artists
+  resources :artists do
+    collection do
+      get :isotope
+    end
+  end
 
   resources :festivals do
     #resources :editions do

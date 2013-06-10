@@ -1,0 +1,12 @@
+
+-artists.each do |artist|
+  .item{:class => "element #{elements(artist)} width2 height2  ", :'data-filter'=>"#{elements(artist)}"}
+    %p.number
+      =artist.id
+    %h3.symbol
+      =artist.name.split(' ').map { |x| x.split('').first.upcase }.join[0,1] + artist.name[-1]
+    %h2.name
+      =artist.name
+    %p.weight
+      =artist.id
+

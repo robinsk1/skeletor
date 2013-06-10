@@ -55,6 +55,8 @@ gem 'friendly_id'
 
 gem 'google-analytics-rails'
 
+gem 'masonry-rails'
+
 
 #gem 'scrapix'
 
