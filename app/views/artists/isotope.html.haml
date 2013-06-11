@@ -1,15 +1,15 @@
-#nav
-  %ul
-    %li
-      %a{"data-filter" => "*", :href => ""} All
-    %li
-      %a{"data-filter" => ".noble-gas", :href => ""} Category 1
-    %li
-      %a{"data-filter" => ".halogen", :href => ""} Category 2
-    %li
-      %a{"data-filter" => ".alkaline-earth", :href => ""} Category 3
+-##nav
+-#  %ul
+-#    %li
+-#      %a{"data-filter" => "*", :href => ""} All
+-#    %li
+-#      %a{"data-filter" => ".noble-gas", :href => ""} Category 1
+-#    %li
+-#      %a{"data-filter" => ".halogen", :href => ""} Category 2
+-#    %li
+-#      %a{"data-filter" => ".alkaline-earth", :href => ""} Category 3
 .row
-  #content.clickable.clearfix
+  #content.photos.clickable.clearfix
     = render :partial => 'isotopes', :locals => { :artists => @artists }
 
 

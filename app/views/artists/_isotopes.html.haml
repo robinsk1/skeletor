@@ -1,10 +1,10 @@
 
 -artists.each do |artist|
-  .item{:class => "element #{elements(artist)}  ", :'data-filter'=>"#{elements(artist)}"}
+  .element{:class => " #{elements(artist)}  ", :'data-filter'=>"#{elements(artist)}", :style=>"background-image:url('#{artist_image(artist)}');"}
     %p.number
       =artist.id
     %h3.symbol
-      =artist.name.split(' ').map { |x| x.split('').first.upcase }.join[0,1] + artist.name[-1]
+      =#artist.name.split(' ').map { |x| x.split('').first.upcase }.join[0,1] + artist.name[-1]
     %h2.name
       =artist.name
     %p.weight

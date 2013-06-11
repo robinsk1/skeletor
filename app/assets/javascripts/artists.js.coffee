@@ -12,8 +12,15 @@ $(document).ready ->
       easing: "linear"
       queue: false
 
+
+  $container.imagesLoaded ->
+    $container.isotope
+      itemSelector : '.photos'
+
+
+
   #   add randomish size classes
-  $container.find('.element').each ->
+  $container.find('.photo').each ->
     $this = $(this)
     number = parseInt( $this.find('.number').text(), 10 )
     if number % 7 % 2 is 1
@@ -22,7 +29,7 @@ $(document).ready ->
       $this.addClass('height2')
 
   $container.isotope
-    itemSelector : '.element'
+    itemSelector : '.photo'
     masonry :
       columnWidth : 120
     masonryHorizontal :

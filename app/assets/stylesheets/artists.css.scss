@@ -44,12 +44,14 @@ color: #151515;
   color: hsla(0,0%,0%,.5);
   right: 0.5em;
   top: 0.1em;
+  color: #FFF;
 }
 
 .element .weight {
   font-size: 0.5em;
   left: 0.5em;
   bottom: 0.2em;
+  color: #FFF;
 }
 
 .element .symbol {
@@ -65,6 +67,24 @@ color: #151515;
   bottom: 1.6em;
   font-size: 0.68em;
   line-height: 0.7em;
-
+  color: #FFF;
 }
+
+/**** Photo demo ****/
+
+.photos .photo {
+  width: auto;
+  margin: 5px;
+  float: left;
+}
+
+.photos .photo img {
+  display: block;
+  width: auto;
+  height: auto;
+}
+
+.photo.width2 { width: 230px; }
+
+.photo.height2 { height: 230px; }
 
