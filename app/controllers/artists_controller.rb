@@ -24,7 +24,7 @@ class ArtistsController < ApplicationController
   end
 
   def isotope
-    @artists = Artist.limit(200)
+    @artists = Artist.limit(100)
   end
 
   # GET /artists/1
