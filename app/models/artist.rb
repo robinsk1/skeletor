@@ -12,6 +12,8 @@ class Artist < ActiveRecord::Base
 
   resourcify
 
+  #scope :festival
+
   def initial
       # find a number at the start of the string if it exists
       m = self.name.match(/^\d+/)

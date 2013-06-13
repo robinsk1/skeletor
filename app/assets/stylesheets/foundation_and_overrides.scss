@@ -1143,7 +1143,7 @@ $em-base: 16px !default;
 
 //// Background color for the top bar
 
-// $topbar-bg: #111;
+//$topbar-bg: #111;
 
 //// Height and margin
 
@@ -1191,3 +1191,7 @@ $em-base: 16px !default;
 // $topbar-breakpoint: emCalc(940px); // Change to 9999px for always mobile layout
 // $topbar-media-query: "only screen and (min-width "#{$topbar-breakpoint}")";
 @import 'foundation';
+
+.fixed {
+  z-index: 1000;
+}

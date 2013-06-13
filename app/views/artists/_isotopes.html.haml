@@ -1,6 +1,6 @@
 
 -artists.each do |artist|
-  .element{:class => " #{elements(artist)}  ", :'data-filter'=>"#{elements(artist)}", :style=>"background-image:url('#{artist_image(artist)}');"}
+  .element{:class => " #{elements(artist)}  ", :'data-filter'=>"#{elements(artist)}", :'festival-id'=>"#{artist.id}", :style=>"background-image:url('#{artist_image(artist)}');"}
     %p.number
       =artist.id
     %h3.symbol
